@@ -1,0 +1,7 @@
+# Local and private files
+.DS_Store
+.env
+.env.*
+!.env.example
+*service_role*
+*secret*

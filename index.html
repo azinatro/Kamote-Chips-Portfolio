@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0dc">
+  <meta name="description" content="Small-batch kamote chips, made fresh and ready to crunch. Preorder your favorite flavor.">
+  <title>QamotyChips — A little sweet. A lot of crunch.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap">
+    <a class="brand" href="#top" aria-label="Kamote Chips home"><span class="brand-mark" aria-hidden="true"><img src="kamote-logo.svg" alt=""></span><span class="brand-name">QamotyChips</span></a>
+    <nav class="nav" aria-label="Main navigation"><a href="#flavors">Flavors</a><a href="#story">Our story</a><a class="nav-cta" href="#order">Preorder <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="top">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow">Small batch · Big crunch</div>
+        <h1>A little sweet.<br><em>A lot of crunch.</em></h1>
+        <p class="hero-copy">Meet your new favorite merienda. Thin, golden kamote chips made in small batches and packed with the kind of crunch you can hear.</p>
+        <div class="actions"><a class="button button-primary" href="#order">Get the next batch <span aria-hidden="true">&nbsp;↗</span></a><a class="button button-secondary" href="#flavors">See the flavors</a></div>
+        <p class="tiny-note">Made with real Magic Kamote · Preorder now, snack soon</p>
+      </div>
+      <div class="hero-art">
+        <div class="sun"></div><span class="spark one">✳</span><span class="spark two">✦</span>
+        <div class="chip-bowl"><div class="chips"><i class="chip c1"></i><i class="chip c2"></i><i class="chip c3"></i><i class="chip c4"></i><i class="chip c5"></i></div></div>
+        <div class="sticker">MADE<br>FRESH<br>FOR YOU</div>
+      </div>
+    </div>
+    <div class="ticker" aria-hidden="true"><span> Magic Kamote</span><b>✳</b><span>Good crunch</span><b>✳</b><span>Good mood</span><b>✳</div>
+    <section id="flavors">
+      <div class="wrap">
+        <div class="section-head"><div><div class="eyebrow">Pick your snacks</div><h2>Three ways to crunch.</h2></div><p>Choose your favorite, or grab a few to share. Fresh batches are made to order.</p></div>
+        <div class="products">
+          <article class="product"><div class="product-art"><span class="flavor-tag">Cheesy & crunchy</span><div class="mini-bag"><span class="mini-chips">〰</span><span class="bag-logo">kamote<br>chips</span><span class="bag-flavor">Cheese</span></div></div><div class="product-info"><div><h3>Cheese</h3><p>Cheesy and crunchy, extra satisfying.</p></div><div class="sizes">Small ₱15<br>Medium ₱30<br>Large ₱50</div></div></article>
+          <article class="product"><div class="product-art"><span class="flavor-tag">Creamy & tangy</span><div class="mini-bag" style="background:#b84e31"><span class="mini-chips">〰</span><span class="bag-logo">kamote<br>chips</span><span class="bag-flavor">Sour cream</span></div></div><div class="product-info"><div><h3>Sour Cream</h3><p>Creamy and tangy, super tasty.</p></div><div class="sizes">Small ₱15<br>Medium ₱30<br>Large ₱50</div></div></article>
+          <article class="product"><div class="product-art"><span class="flavor-tag">Smoky & savory</span><div class="mini-bag" style="background:#744329"><span class="mini-chips">〰</span><span class="bag-logo">kamote<br>chips</span><span class="bag-flavor">BBQ</span></div></div><div class="product-info"><div><h3>BBQ</h3><p>Smoky and savory, boldly flavored.</p></div><div class="sizes">Small ₱15<br>Medium ₱30<br>Large ₱50</div></div></article>
+        </div>
+      </div>
+    </section>
+    <section class="why" id="story">
+      <div class="wrap"><div class="eyebrow"> A homemade with love</div><h2>From our kitchen to your snack break.</h2><p class="why-intro">We make kamote chips the way good snacks should be: thoughtfully, in small batches, and with a whole lot of care. Freshly made for your next merienda moment.</p>
+        <div class="perks"><div class="perk"><div class="perk-icon"></div><h3>Real Magic Kamote</h3><p>Rooted in a Filipino favorite, sliced thin and cooked till beautifully crisp.</p></div><div class="perk"><div class="perk-icon"></div><h3>Made in small batches</h3><p>We prepare each batch fresh, so your crunch arrives tasting its best.</p></div><div class="perk"><div class="perk-icon"></div><h3>Made with care</h3><p>A homemade snack to share with friends, family, or just yourself.</p></div></div>
+      </div>
+    </section>
+    <section id="order">
+      <div class="wrap order">
+        <div class="order-copy"><div class="eyebrow">The next batch is calling</div><h2>Save yourself a pack.</h2><p>Pay first to reserve your preorder. We’ll confirm your order after checking your GCash payment.</p><div class="steps"><div class="step"><span class="step-num">1</span>Choose your flavor, size, and quantity</div><div class="step"><span class="step-num">2</span>Pay the total using the GCash QR</div><div class="step"><span class="step-num">3</span>Send your order and payment receipt</div></div></div>
+        <form class="order-card" id="orderForm">
+          <h3>Preorder your crunch</h3><p class="card-sub">Pay via GCash to reserve your packs.</p>
+          <div class="form-grid">
+            <div class="field"><label for="customer">Your name</label><input id="customer" name="customer" autocomplete="name" placeholder="e.g. Alex Santos" required></div>
+            <div class="field"><label for="contact">Contact number or handle</label><input id="contact" name="contact" placeholder="Where can we reach you?" required></div>
+            <div class="field"><label for="flavor">Flavor</label><select id="flavor" name="flavor"><option>Cheese</option><option>Sour Cream</option><option>BBQ</option><option>Mixed flavors</option></select></div>
+            <div class="field"><label for="size">Size</label><select id="size" name="size"><option value="15">Small — ₱15</option><option value="30">Medium — ₱30</option><option value="50">Large — ₱50</option></select></div>
+            <div class="field full"><label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter number of packs" required></div>
+            <div class="field full"><label>Pay with GCash</label><div class="payment-box"><img ><p class="qr-placeholder"> <strong>PAY IT HERE USING GCASH</strong></p><p class="payment-note">Scan the QR, pay the total shown below, then attach your receipt screenshot when you send the order.</p></div></div>
+            <div class="total-row"><span>Total to pay</span><strong id="totalPrice">₱15</strong></div>
+            <div class="field full"><label for="receipt">GCash receipt screenshot</label><input id="receipt" name="receipt" type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" required><small class="helper">Your receipt is stored privately for the shop owner to review. Maximum file size: 5 MB.</small></div>
+            <div class="field full"><label for="notes">Anything else? <span style="font-weight:500;color:#777968">(optional)</span></label><textarea id="notes" name="notes" placeholder="Pickup or delivery preference, other flavors, etc."></textarea></div>
+          </div>
+          <button class="button button-primary form-submit" id="submitOrder" type="submit">Submit preorder&nbsp; ↗</button>
+          <p class="helper">Your order is reserved only after the payment is checked and confirmed.</p>
+          <div class="confirmation" id="confirmation" role="status" aria-live="polite"><strong id="confirmationTitle"></strong><p id="confirmationText"></p><div class="tracking-result" id="trackingResult" hidden><span>Your order tracking code:</span><code id="trackingCode"></code><button class="copy-button" id="copyTrackingCode" type="button">Copy code</button><a href="track-order.html">Check order status</a></div></div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><img src="kamote-logo.svg" alt=""></span><span class="brand-name">QamotyChips</span></a><div class="footer-note"><a href="track-order.html">Track an order</a><br>Small-batch crunch, made with love.<br>© <span id="year"></span> QamotyChips</div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
