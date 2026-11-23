@@ -18,7 +18,7 @@ create table if not exists public.orders (
     check (status in ('needs_review', 'paid', 'preparing', 'ready', 'cancelled'))
 );
 
--- Add codes to existing rows too, so this change also works on the live project.
+
 alter table public.orders add column if not exists tracking_code uuid;
 update public.orders set tracking_code = gen_random_uuid() where tracking_code is null;
 alter table public.orders alter column tracking_code set not null;
