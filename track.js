@@ -1,5 +1,6 @@
 (() => {
   const form = document.getElementById('trackForm');
+  const recoveryForm = document.getElementById('recoveryForm');
   const input = document.getElementById('trackingInput');
   const button = document.getElementById('trackButton');
   const errorBox = document.getElementById('trackError');
@@ -7,6 +8,10 @@
   const statusTitle = document.getElementById('statusTitle');
   const statusDescription = document.getElementById('statusDescription');
   const orderMeta = document.getElementById('orderMeta');
+  const recoveryButton = document.getElementById('recoveryButton');
+  const recoveryError = document.getElementById('recoveryError');
+  const recoveryResult = document.getElementById('recoveryResult');
+  const recoveryCode = document.getElementById('recoveryCode');
   const configured = Boolean(
     window.supabase?.createClient &&
     window.SUPABASE_URL?.startsWith('https://') &&
@@ -21,6 +26,8 @@
     paid: ['Payment confirmed', 'Your payment is confirmed. Your order is in the queue.'],
     preparing: ['Preparing your order', 'We’re making your kamote chips now.'],
     ready: ['Ready for pickup or delivery', 'Your order is ready. Please check your messages for handoff details.'],
+    delivered: ['Order delivered', 'Your order has been delivered. Thank you for ordering with us!'],
+    picked_up: ['Order picked up', 'Your order has been picked up. Thank you for ordering with us!'],
     cancelled: ['Order cancelled', 'This preorder was cancelled. Contact the shop if you have questions.']
   };
 
@@ -58,6 +65,46 @@
     } finally {
       button.disabled = false;
       button.textContent = 'Check status';
+    }
+  });
+
+  recoveryForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    recoveryError.textContent = '';
+    recoveryResult.classList.remove('show');
+    if (!client) {
+      recoveryError.textContent = 'The order system is not connected yet.';
+      return;
+    }
+
+    const name = document.getElementById('recoveryName').value.trim();
+    const contact = document.getElementById('recoveryContact').value.trim();
+    if (!name || !contact) {
+      recoveryError.textContent = 'Enter the name and phone number from your preorder.';
+      return;
+    }
+
+    recoveryButton.disabled = true;
+    recoveryButton.textContent = 'Creating new code…';
+    try {
+      const { data, error } = await client.rpc('recover_preorder_tracking_code', {
+        p_customer_name: name,
+        p_contact: contact
+      });
+      if (error) throw error;
+      const code = typeof data === 'string' ? data : Array.isArray(data) ? data[0] : null;
+      if (!code) {
+        recoveryError.textContent = 'We couldn’t find a preorder matching that name and phone number. Check the details or contact the shop through its official page.';
+        return;
+      }
+      recoveryCode.textContent = code;
+      recoveryResult.classList.add('show');
+    } catch (error) {
+      console.error('Tracking code recovery failed:', error);
+      recoveryError.textContent = 'We couldn’t create a new code right now. Please try again or contact the shop through its official page.';
+    } finally {
+      recoveryButton.disabled = false;
+      recoveryButton.textContent = 'Create a new tracking code';
     }
   });
 })();

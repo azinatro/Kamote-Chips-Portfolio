@@ -639,6 +639,7 @@ footer .brand {
 }
 .footer-note {
   text-align: right;
+
 }
 @media (max-width: 760px) {
   .wrap {
@@ -849,3 +850,14 @@ input[type="file"] {
   font-weight: 800;
   text-decoration: underline;
 }
+.track-note{
+  text-decoration: underline;
+}
+.tracker-note{
+  text-decoration: underline;
+
+transition: color 0.3s ease;
+}
+.tracker-note:hover {
+  color: green;
+  font-weight: 800;}

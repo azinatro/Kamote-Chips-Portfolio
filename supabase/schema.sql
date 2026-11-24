@@ -15,9 +15,12 @@ create table if not exists public.orders (
   notes text check (notes is null or char_length(notes) <= 1000),
   receipt_path text not null,
   status text not null default 'needs_review'
-    check (status in ('needs_review', 'paid', 'preparing', 'ready', 'cancelled'))
 );
 
+-- Keep this constraint updateable for projects that already have the orders table.
+alter table public.orders drop constraint if exists orders_status_check;
+alter table public.orders add constraint orders_status_check
+  check (status in ('needs_review', 'paid', 'preparing', 'ready', 'delivered', 'picked_up', 'cancelled'));
 
 alter table public.orders add column if not exists tracking_code uuid;
 update public.orders set tracking_code = gen_random_uuid() where tracking_code is null;
@@ -78,6 +81,51 @@ $$;
 
 revoke all on function public.get_preorder_status(uuid) from public;
 grant execute on function public.get_preorder_status(uuid) to anon, authenticated;
+
+-- Allow a customer who knows the name and phone number on the preorder to
+-- replace the latest matching order's tracking code without exposing order data.
+create or replace function public.recover_preorder_tracking_code(
+  p_customer_name text,
+  p_contact text
+)
+returns uuid
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_order_id uuid;
+  v_tracking_code uuid := gen_random_uuid();
+begin
+  if nullif(pg_catalog.btrim(p_customer_name), '') is null
+    or nullif(pg_catalog.btrim(p_contact), '') is null then
+    return null;
+  end if;
+
+  select o.id into v_order_id
+  from public.orders as o
+  where lower(pg_catalog.btrim(o.customer_name)) = lower(pg_catalog.btrim(p_customer_name))
+    and pg_catalog.regexp_replace(o.contact, '[^0-9]', '', 'g') =
+        pg_catalog.regexp_replace(p_contact, '[^0-9]', '', 'g')
+  order by o.created_at desc
+  limit 1
+  for update;
+
+  if v_order_id is null then
+    return null;
+  end if;
+
+  update public.orders
+  set tracking_code = v_tracking_code
+  where id = v_order_id;
+
+  return v_tracking_code;
+end;
+$$;
+
+revoke all on function public.recover_preorder_tracking_code(text, text) from public;
+grant execute on function public.recover_preorder_tracking_code(text, text) to anon, authenticated;
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (

@@ -55,7 +55,7 @@
             <div class="field"><label for="flavor">Flavor</label><select id="flavor" name="flavor"><option>Cheese</option><option>Sour Cream</option><option>BBQ</option><option>Mixed flavors</option></select></div>
             <div class="field"><label for="size">Size</label><select id="size" name="size"><option value="15">Small — ₱15</option><option value="30">Medium — ₱30</option><option value="50">Large — ₱50</option></select></div>
             <div class="field full"><label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter number of packs" required></div>
-            <div class="field full"><label>Pay with GCash</label><div class="payment-box"><img ><p class="qr-placeholder"> <strong>PAY IT HERE USING GCASH</strong></p><p class="payment-note">Scan the QR, pay the total shown below, then attach your receipt screenshot when you send the order.</p></div></div>
+            <div class="field full"><label>Pay with GCash</label><div class="payment-box"><p class="qr-placeholder"><strong>Portfolio demo: live payment QR omitted</strong></p><p class="payment-note">This portfolio copy does not accept real payments.</p></div></div>
             <div class="total-row"><span>Total to pay</span><strong id="totalPrice">₱15</strong></div>
             <div class="field full"><label for="receipt">GCash receipt screenshot</label><input id="receipt" name="receipt" type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" required><small class="helper">Your receipt is stored privately for the shop owner to review. Maximum file size: 5 MB.</small></div>
             <div class="field full"><label for="notes">Anything else? <span style="font-weight:500;color:#777968">(optional)</span></label><textarea id="notes" name="notes" placeholder="Pickup or delivery preference, other flavors, etc."></textarea></div>
@@ -67,7 +67,7 @@
       </div>
     </section>
   </main>
-  <footer class="wrap"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><img src="kamote-logo.svg" alt=""></span><span class="brand-name">QamotyChips</span></a><div class="footer-note"><a href="track-order.html">Track an order</a><br>Small-batch crunch, made with love.<br>© <span id="year"></span> QamotyChips</div></footer>
+  <footer class="wrap"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><img src="kamote-logo.svg" alt=""></span><span class="brand-name">QamotyChips</span></a><div class="footer-note"><a href="track-order.html" ><span class="tracker-note"><strong>Track an order</strong></span></a><br>Small-batch crunch, made with love.<br>© <span id="year"></span> QamotyChips</div></footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="app.js"></script>

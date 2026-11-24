@@ -17,8 +17,20 @@
 
   const client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
   let orderChannel;
-  const statuses = ['needs_review', 'paid', 'preparing', 'ready', 'cancelled'];
-  const statusLabels = { needs_review: 'Needs review', paid: 'Paid', preparing: 'Preparing', ready: 'Ready', cancelled: 'Cancelled' };
+  const statuses = ['needs_review', 'paid', 'preparing', 'ready', 'delivered', 'picked_up', 'cancelled'];
+  const statusLabels = { needs_review: 'Needs review', paid: 'Paid', preparing: 'Preparing', ready: 'Ready', delivered: 'Delivered', picked_up: 'Picked up', cancelled: 'Cancelled' };
+  const completedStatuses = new Set(['delivered', 'picked_up']);
+
+  function weekRange(dateValue) {
+    const date = new Date(dateValue);
+    date.setHours(0, 0, 0, 0);
+    const dayFromMonday = (date.getDay() + 6) % 7;
+    const monday = new Date(date);
+    monday.setDate(date.getDate() - dayFromMonday);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    return { key: monday.toISOString().slice(0, 10), label: `${monday.toLocaleDateString()} – ${sunday.toLocaleDateString()}` };
+  }
 
   function showDashboard(show) {
     loginPanel.hidden = show;
@@ -47,7 +59,23 @@
       ordersBody.append(row);
       return;
     }
-    for (const order of data) {
+    const currentOrders = data.filter((order) => !completedStatuses.has(order.status));
+    const historyByWeek = new Map();
+    for (const order of data.filter((item) => completedStatuses.has(item.status))) {
+      const week = weekRange(order.created_at);
+      if (!historyByWeek.has(week.key)) historyByWeek.set(week.key, { label: week.label, orders: [] });
+      historyByWeek.get(week.key).orders.push(order);
+    }
+    const addHeading = (label) => {
+      const row = document.createElement('tr');
+      const cell = document.createElement('th');
+      cell.colSpan = 7;
+      cell.className = 'admin-group-heading';
+      cell.textContent = label;
+      row.append(cell);
+      ordersBody.append(row);
+    };
+    const appendOrder = (order) => {
       const row = document.createElement('tr');
       const date = document.createElement('td');
       date.textContent = new Date(order.created_at).toLocaleString();
@@ -102,12 +130,21 @@
           dashboardNotice.textContent = 'Could not update this order. Please refresh and try again.';
           console.error(updateError);
         } else {
+          await loadOrders();
           dashboardNotice.textContent = 'Order status updated.';
         }
       });
       statusCell.append(statusSelect);
       row.append(date, buyer, detail, total, code, receiptCell, statusCell);
       ordersBody.append(row);
+    };
+    if (currentOrders.length) {
+      addHeading('Current orders');
+      currentOrders.forEach(appendOrder);
+    }
+    for (const [, week] of [...historyByWeek.entries()].sort(([a], [b]) => b.localeCompare(a))) {
+      addHeading(`Order history · ${week.label}`);
+      week.orders.forEach(appendOrder);
     }
   }
 
